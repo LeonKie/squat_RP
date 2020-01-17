@@ -10,9 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "@teachablemachine/pose": "^0.8.6",
+    "@tensorflow-models/posenet": "^2.2.1",
     "@tensorflow/tfjs": "^1.5.1",
+    "@tensorflow/tfjs-converter": "^1.5.1",
     "@tensorflow/tfjs-core": "^1.5.1",
-    "@tensorflow/tfjs-converter": "^1.5.1"
+    "@tensorflow/tfjs-node": "^1.5.1",
+    "node-fetch": "^2.6.0"
   },
   "peerDependencies": {
     "@tensorflow/tfjs": "^1.5.1",
