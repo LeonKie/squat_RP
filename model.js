@@ -27,13 +27,14 @@ const URL = "./my_model/";
 
         let weights = fs.readFileSync('./weights.bin', 'binary')
         
-
+        
         //console.log(model_json);
         //console.log(weights);
         console.log(metadata_json);
 
         model = await tmPose.loadFromFiles(model_json,weights, metadata_json);
         console.log("Model hase been created!!");
+
 
         maxPredictions = model.getTotalClasses();
 
