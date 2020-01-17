@@ -18,32 +18,22 @@ const URL = "./my_model/";
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
         
         // load Files (model.json , weigths.bin , metadata.json)
-        
-        fs.readFile( __dirname + '/model.json', function (err, model_json) {
-        if (err) {
-            throw err; 
-        }
-        //console.log(model_json.toString());
-        });
-        fs.readFile( __dirname + '/metadata.json', function (err, metadata_json) {
-        if (err) {
-            throw err; 
-        }
-        //console.log(metadata_json.toString());
-        });
 
-        fs.readFile( __dirname + '/weights.bin', function (err, weights) {
-        if (err) {
-            throw err; 
-        }
-        //console.log(typeof weights);
-        });
+        let model_json_raw = fs.readFileSync('model.json');
+        let model_json = JSON.parse(model_json_raw);
 
+        let metadata_json_raw = fs.readFileSync('metadata.json');
+        let metadata_json = JSON.parse(metadata_json_raw);
 
+        let weights = fs.readFileSync('./weights.bin', 'binary')
         
-        
+
+        //console.log(model_json);
+        //console.log(weights);
+        console.log(metadata_json);
+
         model = await tmPose.loadFromFiles(model_json,weights, metadata_json);
-        console.log("Model hase been created!!")
+        console.log("Model hase been created!!");
 
         maxPredictions = model.getTotalClasses();
 
