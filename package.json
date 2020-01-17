@@ -1,0 +1,22 @@
+{
+  "name": "-squat_counter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "model.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@teachablemachine/pose": "^0.8.6",
+    "@tensorflow/tfjs": "^1.5.1",
+    "@tensorflow/tfjs-core": "^1.5.1",
+    "@tensorflow/tfjs-converter": "^1.5.1"
+  },
+  "peerDependencies": {
+    "@tensorflow/tfjs": "^1.5.1",
+    "@tensorflow/tfjs-core": "^1.5.1",
+    "@tensorflow/tfjs-converter": "^1.5.1"
+  }
+}
