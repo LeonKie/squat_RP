@@ -1,5 +1,6 @@
 let tmPose = require("@teachablemachine/pose");
 let tf = require("@tensorflow/tfjs");
+var fs = require('fs');
 
 
 console.log("Hello World")
@@ -15,7 +16,35 @@ const URL = "./my_model/";
         // load the model and metadata
         // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
         // Note: the pose library adds a tmPose object to your window (window.tmPose)
-        model = await tmPose.loadFromFiles(modelURL, metadataURL);
+        
+        // load Files (model.json , weigths.bin , metadata.json)
+        
+        fs.readFile( __dirname + '/model.json', function (err, model_json) {
+        if (err) {
+            throw err; 
+        }
+        //console.log(model_json.toString());
+        });
+        fs.readFile( __dirname + '/metadata.json', function (err, metadata_json) {
+        if (err) {
+            throw err; 
+        }
+        //console.log(metadata_json.toString());
+        });
+
+        fs.readFile( __dirname + '/weights.bin', function (err, weights) {
+        if (err) {
+            throw err; 
+        }
+        //console.log(typeof weights);
+        });
+
+
+        
+        
+        model = await tmPose.loadFromFiles(model_json,weights, metadata_json);
+        console.log("Model hase been created!!")
+
         maxPredictions = model.getTotalClasses();
 
         // Convenience function to setup a webcam
