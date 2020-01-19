@@ -3,6 +3,8 @@ const posenet = require("@tensorflow-models/posenet")
 const tf = require("@tensorflow/tfjs");
 const fs = require('fs');
 const nf = require('node-fetch')
+const NodeWebcam = require( "node-webcam" );
+const jsdom = require("jsdom")
 
 let model, webcam, ctx, labelContainer, maxPredictions;
 
@@ -25,12 +27,17 @@ async function init() {
   maxPredictions = customPoseNet.getTotalClasses()
 
   // at this point the model is created successfully I think
+  const size = 200;
+  NodeWebcam.create(width= size,height= size)
+  NodeWebcam.capture( "test_picture", function( err, data ) {
+    console.log(data)
+  } );
+  // i dont know how to set a picture as a input varible for the model.estimatePose(...) function !!??
 
 
 
 
   // Convenience function to setup a webcam
-  const size = 200;
   const flip = true; // whether to flip the webcam
   webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
   await webcam.setup(); // request access to the webcam
