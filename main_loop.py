@@ -38,7 +38,9 @@ class States():
         
 
     def main_loop(self):
+        
         with Board() as board:
+
             board.button.wait_for_press()
             print('ON')
             board.led.state = Led.ON
@@ -46,6 +48,10 @@ class States():
             board.button.wait_for_release()
             print('OFF')
             board.led.state = Led.OFF
+
+            with Leds() as leds:    
+                leds.update(Leds.privacy_off())
+
 
 
         while self.start:
@@ -76,11 +82,15 @@ class States():
                 if self.state==1:  # if nobody is in the frame reset counter
                     print("###  Reset Score   ###")
                     self.counter=0
+                    with Leds() as leds:
+                        leds.update(Leds.rgb_pattern(Color.RED))
                     self.stopwatch=time.time()
 
             #Checking of the finish
             if self.counter>=5:
                 self.completed=True
+
+                print("Completed Workout")
                 with Leds() as leds:
                     leds.update(Leds.rgb_pattern(Color.GREEN))
 
@@ -107,9 +117,10 @@ class States():
     def _newSqaut(self,count):
         with Leds() as leds:
             print('RGB: Solid GREEN for 1 second')
-            leds.update(Leds.rgb_on(Color.GREEN))
-            time.sleep(0.1)
-            leds.update(Leds.rgb_on((0,0,count*25)))
+            #leds.update(Leds.rgb_on(Color.GREEN))
+            #time.sleep(0.1)
+
+            leds.update(Leds.rgb_on((0,0,count*50)))
             time.sleep(1)
 
 
