@@ -1,6 +1,6 @@
 
 import time
-from aiy.leds import (Leds Pattern, PrivacyLed, RgbLeds, Color)
+from aiy.leds import (Leds, Pattern, PrivacyLed, RgbLeds, Color)
 from aiy.board import Board, Led
 
 #initialisation
@@ -8,7 +8,7 @@ from aiy.board import Board, Led
 global liste
 
 #test stream
-liste =[0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,1,2,0,0,1,1,1,0,0,2,2,2,2,1,2,0,0,0,0,2,2,2,2,1,2,0,0,0,0]
+liste =[2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,1,2,0,0,1,1,1,0,0,2,2,2,2,1,2,0,0,0,0,2,2,2,2,1,2,0,0,0,0]
 
 #test prediction Function
 def update_input_stream():
@@ -64,7 +64,7 @@ class States():
 
                 if self.state==2 and self.last_detected_state==0: #Squat detected
                     self.counter+=1
-                    _newSqaut(self.counter)
+                    self._newSqaut(self.counter)
                     print("###  Current Score: ", self.counter,"###")
 
                 if self.state==2 or self.state==0:
@@ -79,7 +79,7 @@ class States():
                     self.stopwatch=time.time()
 
             #Checking of the finish
-            if self.counter>=10:
+            if self.counter>=5:
                 self.completed=True
                 with Leds() as leds:
                     leds.update(Leds.rgb_pattern(Color.GREEN))
