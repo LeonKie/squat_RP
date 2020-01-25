@@ -11,7 +11,7 @@ We are using a model for detecting the different poses (Teachable Machine) and r
 
 The ```main_loop.py``` script is connecting to the ```localhost:2601``` and is detecting the squats.
 
-After 10 squats the the raspberry outputs a signal to pin _GPIOD_
+After 10 squats the the raspberry outputs a signal to pin ```GPIOD```
 
 You can trigger any event you want. In our case we decided to trigger a coffee Machine, rewarding you with a free coffee after a small work out.
 
