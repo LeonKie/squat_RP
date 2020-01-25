@@ -1,8 +1,7 @@
 
 import time
-from aiy.leds import (Leds,Board, Pattern, PrivacyLed, RgbLeds, Color)
-
-
+from aiy.leds import (Leds Pattern, PrivacyLed, RgbLeds, Color)
+from aiy.board import Board, Led
 
 #initialisation
 
