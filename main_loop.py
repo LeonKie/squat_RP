@@ -83,16 +83,20 @@ class States():
                     with Leds() as leds:
                         leds.pattern = Pattern.blink(500)
                         leds.update(Leds.rgb_pattern(Color.RED))
+                        time.sleep(2)
                     self.stopwatch=time.time()
 
             #Checking of the finish
             if self.counter>=5:
                 self.completed=True
 
+                self.counter=0
+
                 print("Completed Workout")
                 with Leds() as leds:
                     leds.pattern = Pattern.blink(500)
                     leds.update(Leds.rgb_pattern(Color.GREEN))
+                    time.sleep(2)
 
 
 
@@ -120,7 +124,7 @@ class States():
             #leds.update(Leds.rgb_on(Color.GREEN))
             #time.sleep(0.1)
             leds.update(Leds.privacy_off())
-            leds.update(Leds.rgb_on((0,0,count*45)))
+            leds.update(Leds.rgb_on((0,0,count*50)))
             time.sleep(1)
 
 
