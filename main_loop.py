@@ -1,5 +1,8 @@
 
 import time
+from aiy.leds import (Leds,Board, Pattern, PrivacyLed, RgbLeds, Color)
+
+
 
 #initialisation
 
@@ -26,18 +29,27 @@ class States():
         self.last_detected_state=0
 
         self.counter=0
-
-
+        self.completed=False
         self.stopwatch=time.time()
-
+        self.start=False
         #start application
         self.main_loop()
         
-        self.completed=False
+    
         
 
     def main_loop(self):
-        while True:
+        with Board() as board:
+            board.button.wait_for_press()
+            print('ON')
+            board.led.state = Led.ON
+            self.start=True
+            board.button.wait_for_release()
+            print('OFF')
+            board.led.state = Led.OFF
+
+
+        while self.start:
             classes=update_input_stream()
 
             if classes ==0 and self.state!=0:
@@ -53,6 +65,7 @@ class States():
 
                 if self.state==2 and self.last_detected_state==0: #Squat detected
                     self.counter+=1
+                    _newSqaut(self.counter)
                     print("###  Current Score: ", self.counter,"###")
 
                 if self.state==2 or self.state==0:
@@ -69,6 +82,8 @@ class States():
             #Checking of the finish
             if self.counter>=10:
                 self.completed=True
+                with Leds() as leds:
+                    leds.update(Leds.rgb_pattern(Color.GREEN))
 
 
 
@@ -89,6 +104,14 @@ class States():
         print("State:\t ",states_names[self.state], "\t| [trying]")
         self.stopwatch=time.time()
         self.state=2
+
+    def _newSqaut(self,count):
+        with Leds() as leds:
+            print('RGB: Solid GREEN for 1 second')
+            leds.update(Leds.rgb_on(Color.GREEN))
+            time.sleep(0.1)
+            leds.update(Leds.rgb_on((0,0,count*25)))
+            time.sleep(1)
 
 
 
