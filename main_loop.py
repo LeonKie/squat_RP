@@ -119,7 +119,7 @@ class States():
             print('RGB: Solid GREEN for 1 second')
             #leds.update(Leds.rgb_on(Color.GREEN))
             #time.sleep(0.1)
-	        leds.update(Leds.privacy_off())
+            leds.update(Leds.privacy_off())
             leds.update(Leds.rgb_on((0,0,count*45)))
             time.sleep(1)
 
