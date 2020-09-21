@@ -106,14 +106,27 @@ class States():
         #start application
         self.main_loop()
         
-        
+    def onPress(self):
+        with Board() as board:
+            print('ON')
+            board.led.state = Led.ON
+            self.start= not self.start
+            board.button.wait_for_release()
+            print('OFF')
+            board.led.state = Led.OFF
+            color = Color.GREEN if self.start else Color.RED
+            with Leds() as leds:
+                leds.pattern = Pattern.blink(500)
+                leds.update(Leds.rgb_pattern(color))
+                time.sleep(2)
 
     def main_loop(self):
         while True:
             with Board() as board:
                 print("Waiting for input")
                 board.button.wait_for_press()
-                print('ON')
+                board.when_pressed=self.onPress
+                '''print('ON')
                 board.led.state = Led.ON
                 self.start=True
                 self.counter=0
@@ -121,9 +134,7 @@ class States():
                 self.stopwatch=time.time()
                 board.button.wait_for_release()
                 print('OFF')
-                board.led.state = Led.OFF
-
-
+                board.led.state = Led.OFF'''
 
 
             while self.start:
@@ -152,17 +163,8 @@ class States():
 
                 #Reset Interrupt
                 with Board() as board:
-                    if board.when_pressed:
-                        print('ON')
-                        board.led.state = Led.ON
-                        self.start=False
-                        board.button.wait_for_release()
-                        print('OFF')
-                        board.led.state = Led.OFF
-                        with Leds() as leds:
-                            leds.pattern = Pattern.blink(500)
-                            leds.update(Leds.rgb_pattern(Color.RED))
-                            time.sleep(2)
+                    print("Reset should work! ")
+                    board.when_pressed=self.onPress
                 
                 
                 #Resting the counter if nobody is in the frame
