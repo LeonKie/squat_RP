@@ -114,7 +114,7 @@ class States():
                     self.standing()
                 elif classes == 1 and self.state!=1:
                     self.empty()
-                elif classes == 2 and self.state!=2 and self.last_detected_state==0:
+                elif classes == 2 and self.state!=2: #and self.last_detected_state==0:
                     self.squat()
 
                 #Selecting a State
