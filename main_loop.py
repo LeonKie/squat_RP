@@ -120,7 +120,6 @@ class States():
                 #Selecting a State
                 if (time.time()-self.stopwatch) > 0.25:
                     print("State:\t ",states_names[self.state] , "\t| [selected]")
-                    self.last_detected_state=self.state
                     
                     if self.state==2 and self.last_detected_state!=2: #Squat detected
                         self.counter+=1
@@ -128,8 +127,10 @@ class States():
                         print("###  Current Score: ", self.counter,"###")
 
                     if self.state==2 or self.state==0:
-                        self.stopwatch=time.time()                
-                
+                        self.stopwatch=time.time()
+                        
+
+                    self.last_detected_state=self.state
                 #Resting the counter if nobody is in the frame
                 if (time.time()-self.stopwatch) > 10:
                     if self.state==1:  # if nobody is in the frame reset counter
