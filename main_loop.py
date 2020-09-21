@@ -3,21 +3,20 @@ import time
 from threading import Thread
 from aiy.leds import (Leds, Pattern, PrivacyLed, RgbLeds, Color)
 from aiy.board import Board, Led
+from aiy.pins import BUTTON_GPID_PIN
 
+from gpiozero import LED
+from aiy.pins import PIN_D
 
 from picamera import PiCamera
 from aiy.vision.inference import CameraInference
 from aiy.vision.models import face_detection
-from aiy.vision.annotator import Annotator
-
 
 
 #initialisation
-global liste
 global currentState
 
 currentState=0
-
 
 def facedetector():
     """Face detection camera inference example."""
@@ -26,10 +25,8 @@ def facedetector():
     # https://picamera.readthedocs.io/en/release-1.13/fov.html#sensor-modes
     # This is the resolution inference run on.
     with PiCamera(sensor_mode=4, resolution=(1640, 1232), framerate=30) as camera:
-        #camera.start_preview()
         # Annotator renders in software so use a smaller size and scale results
         # for increased performace.
-        #annotator = Annotator(camera, dimensions=(320, 240))
         scale_x = 320 / 1640
         scale_y = 240 / 1232
 
@@ -37,15 +34,15 @@ def facedetector():
         # transform to the form (x1, y1, x2, y2).
         def transform(bounding_box):
             x, y, width, height = bounding_box
-            return (scale_x * x, scale_y * y, scale_x * (x + width),
-                    scale_y * (y + height))
-            
+            return (scale_x * x, scale_y * y, scale_x * (width),
+                    scale_y * (height))
+        
         def checkSquat(bounding_box):
             x, y, width, height = bounding_box
             #calc average y position
             avgHeight=  y+height/2
             
-            if avgHeight>120:
+            if avgHeight>100:
                 return 2;
             else:
                 return 1;
@@ -74,7 +71,8 @@ states_names=["standing","empty","squat"]
 class States():
     def __init__(self):
         pass
-
+        self.output = LED(PIN_D)
+        self.output.off()
         self.state=0
         self.last_detected_state=0
         self.counter=0
@@ -146,6 +144,7 @@ class States():
                 #Checking of the finish
                 if self.counter>=self.TOTAL_SQUATS:
                     self.completed=True
+                    self.output.on()
                     self.counter=0
 
                     print("Completed Workout")
@@ -167,6 +166,8 @@ class States():
                             self.stopwatch=time.time()
                             board.button.wait_for_release()
                             print('OFF')
+                            
+                            self.output.off()
                             board.led.state = Led.OFF
                             leds.pattern = Pattern.blink(500)
                             leds.update(Leds.rgb_pattern(Color.RED))
