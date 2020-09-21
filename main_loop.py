@@ -114,14 +114,14 @@ class States():
                     self.standing()
                 elif classes == 1 and self.state!=1:
                     self.empty()
-                elif classes == 2 and self.state!=2: #and self.last_detected_state==0:
+                elif classes == 2 and self.state!=2 and self.last_detected_state!=2:
                     self.squat()
 
                 #Selecting a State
                 if (time.time()-self.stopwatch) > 0.25:
                     print("State:\t ",states_names[self.state] , "\t| [selected]")
 
-                    if self.state==2 and self.last_detected_state==0: #Squat detected
+                    if self.state==2 and self.last_detected_state!=2: #Squat detected
                         self.counter+=1
                         self._newSqaut(self.counter)
                         print("###  Current Score: ", self.counter,"###")
