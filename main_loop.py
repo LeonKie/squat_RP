@@ -40,8 +40,8 @@ def facedetector():
             x, y, width, height = bounding_box
             #calc average y position
             avgHeight=  y+height/2
-            
-            if avgHeight>80:
+            print("AvgHeight: ", avgHeight)
+            if avgHeight>50:
                 return 2;
             else:
                 return 1;
@@ -61,8 +61,8 @@ def facedetector():
                 else:
                     currentState=0  
                     
-                print('#%05d (%5.2f fps): num_faces=%d' %
-                    (inference.count, inference.rate, len(faces)))
+                #print('#%05d (%5.2f fps): num_faces=%d' %
+                #    (inference.count, inference.rate, len(faces)))
 
 
 
@@ -93,13 +93,13 @@ class States():
                     print("Waiting for input")
                     board.button.wait_for_press()
                     leds.update(Leds.rgb_on((0,0,250)))
-                    print('ON')
+                    #print('ON')
                     self.start=True
                     self.counter=0
                     self.completed=False
                     self.stopwatch=time.time()
                     board.button.wait_for_release()
-                    print('OFF')
+                    #print('OFF')
                     leds.update(Leds.rgb_off())
 
 
@@ -116,12 +116,12 @@ class States():
 
                 #Selecting a State
                 if (time.time()-self.stopwatch) > 0.10:
-                    print("State:\t ",states_names[self.state] , "\t| [selected]")
+                    #print("State:\t ",states_names[self.state] , "\t| [selected]")
                     
                     if self.state==2 and self.last_detected_state!=2: #Squat detected
                         self.counter+=1
                         self._newSqaut(self.counter)
-                        print("###  Current Score: ", self.counter,"###")
+                        #print("###  Current Score: ", self.counter,"###")
 
                     if self.state==2 or self.state==0:
                         self.stopwatch=time.time()
@@ -178,23 +178,23 @@ class States():
 
 
     def standing(self):
-        print("State:\t ",states_names[self.state], "\t| [trying]")
+        #print("State:\t ",states_names[self.state], "\t| [trying]")
         self.stopwatch=time.time()
         self.state=0
         
     def empty(self):
-        print("State:\t ", states_names[self.state], "\t| [trying]")
+        #print("State:\t ", states_names[self.state], "\t| [trying]")
         self.stopwatch=time.time()
         self.state=1
 
     def squat(self):
-        print("State:\t ",states_names[self.state], "\t| [trying]")
+        #print("State:\t ",states_names[self.state], "\t| [trying]")
         self.stopwatch=time.time()
         self.state=2
 
     def _newSqaut(self,count):
         with Leds() as leds:
-            print('RGB: Solid GREEN for 1 second')
+            print('RGB: Solid BLUE for 1 second')
             #leds.update(Leds.rgb_on(Color.GREEN))
             #time.sleep(0.1)
             leds.update(Leds.privacy_off())
