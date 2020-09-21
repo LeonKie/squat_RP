@@ -16,16 +16,7 @@ from aiy.vision.annotator import Annotator
 global liste
 global currentState
 
-#test stream
-liste =[2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,1,2,0,0,1,1,1,0,0,2,2,2,2,1,2,0,0,0,0,2,2,2,2,1,2,0,0,0,0]
 currentState=0
-
-
-#test prediction Function
-def update_input_stream():
-    global liste
-    time.sleep(0.15)
-    return liste.pop()
 
 
 def facedetector():
@@ -58,13 +49,7 @@ def facedetector():
                 return 2;
             else:
                 return 1;
-            
-            
-            
-            
-        
-        
-        
+                    
         
         with CameraInference(face_detection.model()) as inference:
             for result in inference.run(None):
@@ -82,12 +67,6 @@ def facedetector():
                     
                 print('#%05d (%5.2f fps): num_faces=%d' %
                     (inference.count, inference.rate, len(faces)))
-
-        #camera.stop_preview()
-    
-    
-    
-    
 
 
 
@@ -152,7 +131,7 @@ class States():
                         self.stopwatch=time.time()                
                 
                 #Resting the counter if nobody is in the frame
-                if (time.time()-self.stopwatch) > 2:
+                if (time.time()-self.stopwatch) > 10:
                     if self.state==1:  # if nobody is in the frame reset counter
                         print("###  Reset Score   ###")
                         self.counter=0
@@ -222,7 +201,6 @@ class States():
 
 
 if __name__ == '__main__':
-    #face_detection()
     Thread(target=facedetector).start()
     Thread(target=States).start()
     
