@@ -74,11 +74,11 @@ def facedetector():
                     checkedFaces.append(checkSquat(transform(face.bounding_box)))
                 
                 if len(checkedFaces)==0:
-                    currentState=0
+                    currentState=1
                 elif (2 in checkedFaces):
                     currentState=2
                 else:
-                    currentState=1  
+                    currentState=0  
                     
                 print('#%05d (%5.2f fps): num_faces=%d' %
                     (inference.count, inference.rate, len(faces)))
@@ -118,14 +118,13 @@ class States():
                     board.button.wait_for_press()
                     leds.update(Leds.rgb_on((0,0,250)))
                     print('ON')
-                    board.led.state = Led.ON
                     self.start=True
                     self.counter=0
                     self.completed=False
                     self.stopwatch=time.time()
                     board.button.wait_for_release()
                     print('OFF')
-                    board.led.state = Led.OFF
+                    leds.update(Leds.rgb_off())
 
 
             while self.start:
@@ -193,8 +192,6 @@ class States():
                             leds.update(Leds.rgb_pattern(Color.RED))
                             time.sleep(2)
                         
-                        
-                    
                         
                         
 
