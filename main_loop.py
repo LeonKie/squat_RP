@@ -149,13 +149,7 @@ class States():
 
                     if self.state==2 or self.state==0:
                         self.last_detected_state=self.state
-                        self.stopwatch=time.time()
-
-                #Reset Interrupt
-                with Board() as board:
-                    print("Reset should work! ")
-                    board.when_pressed=self.onPress
-                
+                        self.stopwatch=time.time()                
                 
                 #Resting the counter if nobody is in the frame
                 if (time.time()-self.stopwatch) > 2:
