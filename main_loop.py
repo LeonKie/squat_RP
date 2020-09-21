@@ -117,10 +117,6 @@ class States():
             print('ON')
             board.led.state = Led.ON
             self.start=True
-            
-            
-            self.state=0
-            self.last_detected_state=0
             self.counter=0
             self.completed=False
             self.stopwatch=time.time()
@@ -182,7 +178,7 @@ class States():
                     self.stopwatch=time.time()
 
             #Checking of the finish
-            if self.counter>=TOTAL_SQUATS:
+            if self.counter>=self.TOTAL_SQUATS:
                 self.completed=True
                 self.counter=0
 
