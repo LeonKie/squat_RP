@@ -32,7 +32,7 @@ def facedetector():
     # https://picamera.readthedocs.io/en/release-1.13/fov.html#sensor-modes
     # This is the resolution inference run on.
     with PiCamera(sensor_mode=4, resolution=(1640, 1232), framerate=30) as camera:
-        camera.start_preview()
+        #camera.start_preview()
         # Annotator renders in software so use a smaller size and scale results
         # for increased performace.
         #annotator = Annotator(camera, dimensions=(320, 240))
@@ -70,7 +70,7 @@ def facedetector():
                 for face in faces:
                     checkedFaces.append(checkSquat(transform(face.bounding_box)))
                 
-                if len(checkSquat)==0:
+                if len(checkedFaces)==0:
                     currentState=0
                 elif (2 in checkedFaces):
                     currentState=2
@@ -81,7 +81,7 @@ def facedetector():
                 print('#%05d (%5.2f fps): num_faces=%d' %
                     (inference.count, inference.rate, len(faces)))
 
-        camera.stop_preview()
+        #camera.stop_preview()
     
     
     
