@@ -106,7 +106,7 @@ class States():
             while self.start:
                 
                 classes=currentState
-                print("current State: ", classes)
+                #print("current State: ", classes)
                 if classes ==0 and self.state!=0:
                     self.standing()
                 elif classes == 1 and self.state!=1:
