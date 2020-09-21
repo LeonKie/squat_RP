@@ -4,7 +4,7 @@ from threading import Thread
 from aiy.leds import (Leds, Pattern, PrivacyLed, RgbLeds, Color)
 from aiy.board import Board, Led
 
-from gpiozero import LED
+from gpiozero import OutputDevice
 from aiy.pins import PIN_D
 
 from picamera import PiCamera
@@ -70,7 +70,7 @@ states_names=["standing","empty","squat"]
 class States():
     def __init__(self):
         pass
-        self.output = LED(PIN_D)
+        self.output = OutputDevice(PIN_D)
         self.output.off()
         self.state=0
         self.last_detected_state=0
