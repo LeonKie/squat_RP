@@ -1,12 +1,13 @@
 
 import time
+from threading import Thread
+
 
 #initialisation
-
 global liste
 
 #test stream
-liste =[0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,1,2,0,0,1,1,1,0,0,2,2,2,2,1,2,0,0,0,0,2,2,2,2,1,2,0,0,0,0]
+liste =[0,0,2,2,2,2,0,0,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,1,2,0,0,1,1,1,0,0,2,2,2,2,1,2,0,0,0,0,2,2,2,2,1,2,0,0,0,0]
 
 #test prediction Function
 def update_input_stream():
@@ -14,26 +15,26 @@ def update_input_stream():
     time.sleep(0.15)
     return liste.pop()
 
-    
+
+
+
 
 states_names=["standing","empty","squat"]
-
 class States():
     def __init__(self):
         pass
 
         self.state=0
         self.last_detected_state=0
-
         self.counter=0
-
-
+        
+        self.completed=False
         self.stopwatch=time.time()
 
         #start application
         self.main_loop()
         
-        self.completed=False
+        
         
 
     def main_loop(self):
@@ -71,10 +72,6 @@ class States():
                 self.completed=True
 
 
-
-
-
-
     def standing(self):
         print("State:\t ",states_names[self.state], "\t| [trying]")
         self.stopwatch=time.time()
@@ -90,10 +87,13 @@ class States():
         self.stopwatch=time.time()
         self.state=2
 
+if __name__ == '__main__':
+    
+    
+    start=States()
+    
 
 
-
-start=States()
 
 
 
