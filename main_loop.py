@@ -3,7 +3,6 @@ import time
 from threading import Thread
 from aiy.leds import (Leds, Pattern, PrivacyLed, RgbLeds, Color)
 from aiy.board import Board, Led
-from aiy.pins import BUTTON_GPID_PIN
 
 from gpiozero import LED
 from aiy.pins import PIN_D
