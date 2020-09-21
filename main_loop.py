@@ -10,8 +10,9 @@ from aiy.vision.inference import CameraInference
 from aiy.vision.models import face_detection
 from aiy.vision.annotator import Annotator
 
-#initialisation
 
+
+#initialisation
 global liste
 global currentState
 
@@ -19,11 +20,13 @@ global currentState
 liste =[2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,1,2,0,0,1,1,1,0,0,2,2,2,2,1,2,0,0,0,0,2,2,2,2,1,2,0,0,0,0]
 currentState=0
 
+
 #test prediction Function
 def update_input_stream():
     global liste
     time.sleep(0.15)
     return liste.pop()
+
 
 def facedetector():
     """Face detection camera inference example."""
@@ -86,18 +89,16 @@ def facedetector():
     
     
     
-    
-    
+
+
 
 states_names=["standing","empty","squat"]
-
 class States():
     def __init__(self):
         pass
 
         self.state=0
         self.last_detected_state=0
-
         self.counter=0
         self.completed=False
         self.stopwatch=time.time()
@@ -105,7 +106,6 @@ class States():
         #start application
         self.main_loop()
         
-    
         
 
     def main_loop(self):
@@ -170,10 +170,6 @@ class States():
                     time.sleep(2)
 
 
-
-
-
-
     def standing(self):
         print("State:\t ",states_names[self.state], "\t| [trying]")
         self.stopwatch=time.time()
@@ -205,10 +201,6 @@ if __name__ == '__main__':
     Thread(target=States).start()
     
     
-
-
-
-
 
 
 
