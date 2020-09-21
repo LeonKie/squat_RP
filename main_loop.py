@@ -41,7 +41,7 @@ def facedetector():
             #calc average y position
             avgHeight=  y+height/2
             
-            if avgHeight>120:
+            if avgHeight>80:
                 return 2;
             else:
                 return 1;
@@ -115,7 +115,7 @@ class States():
                     self.squat()
 
                 #Selecting a State
-                if (time.time()-self.stopwatch) > 0.25:
+                if (time.time()-self.stopwatch) > 0.10:
                     print("State:\t ",states_names[self.state] , "\t| [selected]")
                     
                     if self.state==2 and self.last_detected_state!=2: #Squat detected
@@ -126,7 +126,8 @@ class States():
                     if self.state==2 or self.state==0:
                         self.stopwatch=time.time()
                         
-
+                        
+                    
                     self.last_detected_state=self.state
                 #Resting the counter if nobody is in the frame
                 if (time.time()-self.stopwatch) > 10:
