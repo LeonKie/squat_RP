@@ -106,35 +106,25 @@ class States():
         #start application
         self.main_loop()
         
-    def onPress(self):
-        with Board() as board:
-            print('ON')
-            board.led.state = Led.ON
-            self.start= not self.start
-            board.button.wait_for_release()
-            print('OFF')
-            board.led.state = Led.OFF
-            color = Color.GREEN if self.start else Color.RED
-            with Leds() as leds:
-                leds.pattern = Pattern.blink(500)
-                leds.update(Leds.rgb_pattern(color))
-                time.sleep(2)
 
     def main_loop(self):
         while True:
-            with Board() as board:
-                print("Waiting for input")
-                board.button.wait_for_press()
-                board.when_pressed=self.onPress
-                '''print('ON')
-                board.led.state = Led.ON
-                self.start=True
-                self.counter=0
-                self.completed=False
-                self.stopwatch=time.time()
-                board.button.wait_for_release()
-                print('OFF')
-                board.led.state = Led.OFF'''
+            with Leds() as leds:
+                leds.update(Leds.rgb_on(Color.RED))
+            
+                with Board() as board:
+                    print("Waiting for input")
+                    board.button.wait_for_press()
+                    leds.update(Leds.rgb_on((0,0,250)))
+                    print('ON')
+                    board.led.state = Led.ON
+                    self.start=True
+                    self.counter=0
+                    self.completed=False
+                    self.stopwatch=time.time()
+                    board.button.wait_for_release()
+                    print('OFF')
+                    board.led.state = Led.OFF
 
 
             while self.start:
@@ -190,6 +180,26 @@ class States():
                         leds.pattern = Pattern.blink(500)
                         leds.update(Leds.rgb_pattern(Color.GREEN))
                         time.sleep(2)
+                        leds.update(Leds.rgb_on(Color.GREEN))
+                                    
+                        with Board() as board:
+                            print("Waiting for input")
+                            board.button.wait_for_press()
+                            print('ON')
+                            board.led.state = Led.ON
+                            self.start=False
+                            self.counter=0
+                            self.completed=False
+                            self.stopwatch=time.time()
+                            board.button.wait_for_release()
+                            print('OFF')
+                            board.led.state = Led.OFF
+                            leds.pattern = Pattern.blink(500)
+                            leds.update(Leds.rgb_pattern(Color.RED))
+                            time.sleep(2)
+                        
+                        
+                    
                         
                         
 
