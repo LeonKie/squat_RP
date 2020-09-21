@@ -103,6 +103,7 @@ class States():
         self.completed=False
         self.stopwatch=time.time()
         self.start=False
+        self.TOTAL_SQUATS=5
         #start application
         self.main_loop()
         
@@ -116,6 +117,13 @@ class States():
             print('ON')
             board.led.state = Led.ON
             self.start=True
+            
+            
+            self.state=0
+            self.last_detected_state=0
+            self.counter=0
+            self.completed=False
+            self.stopwatch=time.time()
             board.button.wait_for_release()
             print('OFF')
             board.led.state = Led.OFF
@@ -146,11 +154,28 @@ class States():
                     self.last_detected_state=self.state
                     self.stopwatch=time.time()
 
+            #Reset Interrupt
+            with Board() as board:
+                
+                if board.when_pressed:
+                    print('ON')
+                    board.led.state = Led.ON
+                    self.start=False
+                    board.button.wait_for_release()
+                    print('OFF')
+                    board.led.state = Led.OFF
+                    with Leds() as leds:
+                        leds.pattern = Pattern.blink(500)
+                        leds.update(Leds.rgb_pattern(Color.RED))
+                        time.sleep(2)
+            
+            
             #Resting the counter if nobody is in the frame
             if (time.time()-self.stopwatch) > 2:
                 if self.state==1:  # if nobody is in the frame reset counter
                     print("###  Reset Score   ###")
                     self.counter=0
+                    self.start=False
                     with Leds() as leds:
                         leds.pattern = Pattern.blink(500)
                         leds.update(Leds.rgb_pattern(Color.RED))
@@ -158,16 +183,18 @@ class States():
                     self.stopwatch=time.time()
 
             #Checking of the finish
-            if self.counter>=5:
+            if self.counter>=TOTAL_SQUATS:
                 self.completed=True
-
                 self.counter=0
 
                 print("Completed Workout")
+                self.start=False
                 with Leds() as leds:
                     leds.pattern = Pattern.blink(500)
                     leds.update(Leds.rgb_pattern(Color.GREEN))
                     time.sleep(2)
+                    
+                    
 
 
     def standing(self):
