@@ -1,14 +1,23 @@
 
 import time
+from threading import Thread
 from aiy.leds import (Leds, Pattern, PrivacyLed, RgbLeds, Color)
 from aiy.board import Board, Led
+
+
+from picamera import PiCamera
+from aiy.vision.inference import CameraInference
+from aiy.vision.models import face_detection
+from aiy.vision.annotator import Annotator
 
 #initialisation
 
 global liste
+global currentState
 
 #test stream
 liste =[2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,0,0,2,2,2,2,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,2,2,2,2,1,2,0,0,1,1,1,0,0,2,2,2,2,1,2,0,0,0,0,2,2,2,2,1,2,0,0,0,0]
+currentState=0
 
 #test prediction Function
 def update_input_stream():
@@ -16,6 +25,46 @@ def update_input_stream():
     time.sleep(0.15)
     return liste.pop()
 
+def facedetection():
+    """Face detection camera inference example."""
+
+    # Forced sensor mode, 1640x1232, full FoV. See:
+    # https://picamera.readthedocs.io/en/release-1.13/fov.html#sensor-modes
+    # This is the resolution inference run on.
+    with PiCamera(sensor_mode=4, resolution=(1640, 1232), framerate=30) as camera:
+        camera.start_preview()
+        # Annotator renders in software so use a smaller size and scale results
+        # for increased performace.
+        annotator = Annotator(camera, dimensions=(320, 240))
+        scale_x = 320 / 1640
+        scale_y = 240 / 1232
+
+        # Incoming boxes are of the form (x, y, width, height). Scale and
+        # transform to the form (x1, y1, x2, y2).
+        def transform(bounding_box):
+            x, y, width, height = bounding_box
+            return (scale_x * x, scale_y * y, scale_x * (x + width),
+                    scale_y * (y + height))
+
+        with CameraInference(face_detection.model()) as inference:
+            for result in inference.run(None):
+                faces = face_detection.get_faces(result)
+                annotator.clear()
+                for face in faces:
+                    annotator.bounding_box(transform(face.bounding_box), fill=0)
+                    print(face.bounding_box)
+                annotator.update()
+                
+                
+                print('#%05d (%5.2f fps): num_faces=%d' %
+                    (inference.count, inference.rate, len(faces)))
+
+        camera.stop_preview()
+    
+    
+    
+    
+    
     
 
 states_names=["standing","empty","squat"]
@@ -128,9 +177,14 @@ class States():
             time.sleep(1)
 
 
+if __name__ == '__main__':
+    Thread(face_detection).start()
+    Thread(States()).start()
+    
+    
 
 
-start=States()
+
 
 
 
