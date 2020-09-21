@@ -41,7 +41,7 @@ def facedetector():
             #calc average y position
             avgHeight=  y+height/2
             print("AvgHeight: ", avgHeight)
-            if avgHeight>120:
+            if avgHeight>72.5:
                 return 2;
             else:
                 return 1;
