@@ -111,7 +111,7 @@ class States():
     def main_loop(self):
         
         with Board() as board:
-
+            
             board.button.wait_for_press()
             print('ON')
             board.led.state = Led.ON
@@ -124,7 +124,7 @@ class States():
 
 
         while self.start:
-            classes=update_input_stream()
+            classes=currentState
 
             if classes ==0 and self.state!=0:
                 self.standing()
@@ -202,7 +202,7 @@ class States():
 if __name__ == '__main__':
     #face_detection()
     Thread(target=facedetector).start()
-    #Thread(target=States).start()
+    Thread(target=States).start()
     
     
 
