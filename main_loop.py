@@ -27,7 +27,7 @@ def update_input_stream():
 
 def facedetector():
     """Face detection camera inference example."""
-
+    global currentState
     # Forced sensor mode, 1640x1232, full FoV. See:
     # https://picamera.readthedocs.io/en/release-1.13/fov.html#sensor-modes
     # This is the resolution inference run on.
@@ -35,7 +35,7 @@ def facedetector():
         camera.start_preview()
         # Annotator renders in software so use a smaller size and scale results
         # for increased performace.
-        annotator = Annotator(camera, dimensions=(320, 240))
+        #annotator = Annotator(camera, dimensions=(320, 240))
         scale_x = 320 / 1640
         scale_y = 240 / 1232
 
@@ -45,17 +45,39 @@ def facedetector():
             x, y, width, height = bounding_box
             return (scale_x * x, scale_y * y, scale_x * (x + width),
                     scale_y * (y + height))
-
+            
+        def checkSquat(bounding_box):
+            x, y, width, height = bounding_box
+            #calc average y position
+            avgHeight=  y+height/2
+            
+            if avgHeight>120:
+                return 2;
+            else:
+                return 1;
+            
+            
+            
+            
+        
+        
+        
+        
         with CameraInference(face_detection.model()) as inference:
             for result in inference.run(None):
                 faces = face_detection.get_faces(result)
-                annotator.clear()
+                checkedFaces=[]
                 for face in faces:
-                    annotator.bounding_box(transform(face.bounding_box), fill=0)
-                    print(face.bounding_box)
-                annotator.update()
+                    checkedFaces.append(checkSquat(transform(face.bounding_box)))
                 
-                
+                if len(checkSquat)==0:
+                    currentState=0
+                elif (2 in checkedFaces):
+                    currentState=2
+                else:
+                    currentState=1  
+                    
+                print("CurrentState: ", currentState)
                 print('#%05d (%5.2f fps): num_faces=%d' %
                     (inference.count, inference.rate, len(faces)))
 
