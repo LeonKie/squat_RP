@@ -155,8 +155,7 @@ class States():
                     self.stopwatch=time.time()
 
             #Reset Interrupt
-            with Board() as board:
-                
+            '''with Board() as board:
                 if board.when_pressed:
                     print('ON')
                     board.led.state = Led.ON
@@ -167,7 +166,7 @@ class States():
                     with Leds() as leds:
                         leds.pattern = Pattern.blink(500)
                         leds.update(Leds.rgb_pattern(Color.RED))
-                        time.sleep(2)
+                        time.sleep(2)'''
             
             
             #Resting the counter if nobody is in the frame
