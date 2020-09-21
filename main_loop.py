@@ -25,7 +25,7 @@ def update_input_stream():
     time.sleep(0.15)
     return liste.pop()
 
-def facedetection():
+def facedetector():
     """Face detection camera inference example."""
 
     # Forced sensor mode, 1640x1232, full FoV. See:
@@ -178,10 +178,12 @@ class States():
 
 
 if __name__ == '__main__':
-    Thread(face_detection).start()
-    Thread(States()).start()
+    #face_detection()
+    Thread(target=facedetector).start()
+    #Thread(target=States).start()
     
     
+
 
 
 
