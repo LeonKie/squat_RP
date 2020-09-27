@@ -130,7 +130,7 @@ class States():
                             #self.stopwatch = time.time()
                             leds.update(Leds.rgb_on(Color.WHITE))
 
-                        if self.state == 1:
+                        if self.state == 1 and ((time.time()-self.stopwatch) > 1):
                             leds.update(Leds.rgb_off())
                         
                         self.last_detected_state = self.state
@@ -199,7 +199,7 @@ class States():
     def _newSqaut(self):
         
         print('RGB: Solid BLUE for 1 second')
-        time.sleep(0.5)
+        time.sleep(0.75)
 
 
 if __name__ == '__main__':
