@@ -116,12 +116,14 @@ class States():
                         self.squat()
 
                     # Selecting a State
-                    if (time.time()-self.stopwatch) > 0.50:
+                    if (time.time()-self.stopwatch) > 0.15:
                         print("State:\t ",states_names[self.state] , "\t| [selected]")
 
                         if self.state == 2 and self.last_detected_state != 2:  # Squat detected
                             self.counter += 1
-                            self._newSqaut(self.counter,leds)
+                            leds.update(Leds.rgb_on((0, 0, 250)))
+                            self._newSqaut()
+                            
                             # print("###  Current Score: ", self.counter,"###")
 
                         if self.state == 2 or self.state == 0:
@@ -194,11 +196,10 @@ class States():
         self.stopwatch = time.time()
         self.state = 2
 
-    def _newSqaut(self,count, leds):
+    def _newSqaut(self):
         
         print('RGB: Solid BLUE for 1 second')
-        leds.update(Leds.rgb_on((0, 0, count*50)))
-        time.sleep(1)
+        time.sleep(0.5)
 
 
 if __name__ == '__main__':
