@@ -117,7 +117,7 @@ class States():
                         self.squat()
 
                     # Selecting a State
-                    if (time.time()-self.stopwatch) > 0.10:
+                    if (time.time()-self.stopwatch) > 0.20:
                         #print("State:\t ",states_names[self.state] , "\t| [selected]")
 
                         if self.state == 2 and self.last_detected_state != 2:  # Squat detected
