@@ -199,7 +199,7 @@ class States():
         
         print('RGB: Solid BLUE for 1 second')
         leds.update(Leds.rgb_on((0, 0, count*50)))
-        time.sleep(0.5)
+        time.sleep(1)
 
 
 if __name__ == '__main__':
