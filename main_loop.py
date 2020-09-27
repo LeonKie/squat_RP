@@ -43,7 +43,7 @@ def facedetector():
             x, y, width, height = bounding_box
             # calc average y position
             avgHeight = y+height/2
-            print("AvgHeight: ", avgHeight)
+            #print("AvgHeight: ", avgHeight)
             if avgHeight > 100:
                 return 2
             else:
@@ -117,7 +117,7 @@ class States():
 
                     # Selecting a State
                     if (time.time()-self.stopwatch) > 0.20:
-                        #print("State:\t ",states_names[self.state] , "\t| [selected]")
+                        print("State:\t ",states_names[self.state] , "\t| [selected]")
 
                         if self.state == 2 and self.last_detected_state != 2:  # Squat detected
                             self.counter += 1
