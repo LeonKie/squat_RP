@@ -73,7 +73,6 @@ states_names = ["standing", "empty", "squat"]
 
 class States():
     def __init__(self):
-        pass
         self.output = LED(PIN_D)
         self.output.off()
         self.state = 0
