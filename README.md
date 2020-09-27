@@ -3,10 +3,10 @@
 ```
 python3 main_loop.py
 ```
-
 # Introduction
 
 I am using a *face-detection* model to detect the position of any face. When the detected face moves blow a certain threshold in the video frame a **squard** is detected and a counter keeps track.
+
 
 The ```main_loop.py``` script is connecting to the Vision AI Camera and uses *Face-detection* to find any faces in the video. 
 
