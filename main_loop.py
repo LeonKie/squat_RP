@@ -16,6 +16,9 @@ from aiy.vision.models import face_detection
 global currentState
 currentState = 0
 states_names = ["standing", "empty", "squat"]
+THRESHOLD_Y= 100 # 240 is the lowest pixel on the screen (direction t->b; top=0 bottom=240)
+TOTAL_SQUATS=5
+
 
 def facedetector():
     """Face detection camera inference example."""
@@ -42,7 +45,7 @@ def facedetector():
             # calc average y position
             avgHeight = y+height/2
             #print("AvgHeight: ", avgHeight)
-            if avgHeight > 100:
+            if avgHeight > THRESHOLD_Y:
                 return 2
             else:
                 return 1
@@ -62,8 +65,6 @@ def facedetector():
                 else:
                     currentState = 0
 
-                #print('#%05d (%5.2f fps): num_faces=%d' %
-                #(inference.count, inference.rate, len(faces)))
 
 
 
@@ -78,7 +79,7 @@ class States():
         self.completed = False
         self.stopwatch = time.time()
         self.start = False
-        self.TOTAL_SQUATS = 5
+        
         #start application
         self.main_loop()
 
@@ -119,7 +120,6 @@ class States():
                             self.counter += 1
                             leds.update(Leds.rgb_on((0, 0, 250)))
                             self._newSqaut()
-                            
                             #print("###  Current Score: ", self.counter,"###")
 
                         if self.state == 2 or self.state == 0:
@@ -145,7 +145,7 @@ class States():
                             self.stopwatch = time.time()
 
                     # Checking of the finish
-                    if self.counter >= self.TOTAL_SQUATS:
+                    if self.counter >= TOTAL_SQUATS:
                         self.completed = True
                         self.output.on()
                         self.counter = 0
