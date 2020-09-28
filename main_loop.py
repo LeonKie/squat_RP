@@ -14,10 +14,8 @@ from aiy.vision.models import face_detection
 
 # initialisation
 global currentState
-
-
 currentState = 0
-
+states_names = ["standing", "empty", "squat"]
 
 def facedetector():
     """Face detection camera inference example."""
@@ -64,14 +62,13 @@ def facedetector():
                 else:
                     currentState = 0
 
-                # print('#%05d (%5.2f fps): num_faces=%d' %
-                #    (inference.count, inference.rate, len(faces)))
+                #print('#%05d (%5.2f fps): num_faces=%d' %
+                #(inference.count, inference.rate, len(faces)))
 
-
-states_names = ["standing", "empty", "squat"]
 
 
 class States():
+    
     def __init__(self):
         self.output = LED(PIN_D,active_high=False)
         self.output.off()
@@ -82,11 +79,10 @@ class States():
         self.stopwatch = time.time()
         self.start = False
         self.TOTAL_SQUATS = 5
-        # start application
+        #start application
         self.main_loop()
 
     def main_loop(self):
-
         while True:
             with Leds() as leds:
                 leds.update(Leds.rgb_on(Color.RED))
@@ -95,13 +91,13 @@ class States():
                     print("Waiting for input")
                     board.button.wait_for_press()
                     leds.update(Leds.rgb_on((0, 0, 250)))
-                    # print('ON')
+                    #print('ON')
                     self.start = True
                     self.counter = 0
                     self.completed = False
                     self.stopwatch = time.time()
                     board.button.wait_for_release()
-                    # print('OFF')
+                    #print('OFF')
                     leds.update(Leds.rgb_off())
 
                 while self.start:
@@ -124,7 +120,7 @@ class States():
                             leds.update(Leds.rgb_on((0, 0, 250)))
                             self._newSqaut()
                             
-                            # print("###  Current Score: ", self.counter,"###")
+                            #print("###  Current Score: ", self.counter,"###")
 
                         if self.state == 2 or self.state == 0:
                             #self.stopwatch = time.time()
@@ -197,7 +193,6 @@ class States():
         self.state = 2
 
     def _newSqaut(self):
-        
         print('RGB: Solid BLUE for 1 second')
         time.sleep(0.75)
 
