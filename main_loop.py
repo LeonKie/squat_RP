@@ -16,7 +16,7 @@ from aiy.vision.models import face_detection
 global currentState
 currentState = 0
 states_names = ["standing", "empty", "squat"]
-THRESHOLD_Y= 100 # 240 is the lowest pixel on the screen (direction t->b; top=0 bottom=240)
+THRESHOLD_Y= 100  # 240 is the lowest pixel on the screen (direction t->b; top=0 bottom=240)
 TOTAL_SQUATS=5
 
 
@@ -71,7 +71,7 @@ def facedetector():
 class States():
     
     def __init__(self):
-        self.output = LED(PIN_D,active_high=False)
+        self.output = LED(PIN_D)
         self.output.off()
         self.state = 0
         self.last_detected_state = 0
